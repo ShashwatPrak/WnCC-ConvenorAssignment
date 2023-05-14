@@ -1,3 +1,6 @@
+# I am using the pseudo-Sudoku algorithm to solve this question.
+# One can go through the cross hatching algorithm to understand my approach
+# https://sudokugarden.de/en/solve/crosshatching
 A = []
 B = []
 M = 0
