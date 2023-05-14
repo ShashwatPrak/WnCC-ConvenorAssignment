@@ -6,6 +6,7 @@ B = []
 M = 0
 N = 0 
 C = []
+# input_value() - just takes input from the user as per the specified format
 def input_value():
     N = int(input("Enter the number of persons "))
     print("\nEnter the details of each person \n")
@@ -24,8 +25,10 @@ def input_value():
         for j in range(1,6):
             B[i][j] = int(B[i][j])
 input_value()
-print(A)
-print(B)
+# print(A) check if the input has been stored correctly
+# print(B)
+# skillreqmat() - giving values to a 3-dimensional matrix C, whose rows (i) signify a particular project and columns(j) contain 1D array containg the list of all persons eligible for the jth role in the ith project
+# if a role is not required in a project , the corresponding position in matrix C is set to -1
 def skillreqmat():
     for i in range(0,M):
         C.append([])
@@ -41,6 +44,9 @@ def skillreqmat():
                 if( B[i][j] - 1 <= A[k][j]):
                     C[i][j-1].append(k)
 skillreqmat()
+# manipulation1() - if the length of the list at C[i][j] is zero, this means that there is no person suitable for that role => project i cannot be completed => clear the ith row from C
+# 59 -73 => if a person is eligible for jth role in ith project as a mentee , he must have a mentor in ith project in the remaining j' roles. If we cannot find a mentor for the jth role from among the j' roles in the ith project , we need to remove that person from the list at C[i][j].
+# 73-76 => suppose we found only one mentor for a person in jth role at (j+1)th role, but that person was himself a mentee for the (j+1)th role for whom we could not find a mentor,so we had to remove that person from the list at C[i][j+1]. Since that person was the mentor for the jth role,we'll have to recheck the ith row until no changes are made. 
 def manipulation1():
     for i in range(0,len(C)):
         for j in range(0,5):
@@ -71,6 +77,8 @@ def manipulation1():
 manipulation1()
 PerReq = []
 E = []
+# 82-92 => define a 2-Dimensional matrix PerReq with (i,j)th element as the number of projects in which the ith person is eligible for jth role
+# 93 - 101 => define a 2-Dimensional matrix E with (i,j)th element as the number of persons which are eligible for the jth role in ith project. If ith project cannot be completed, then ith row is an empty list
 def calculations():
     for i in range(0,N):
         PerReq.append([])
