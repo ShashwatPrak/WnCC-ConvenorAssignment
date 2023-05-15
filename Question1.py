@@ -43,7 +43,7 @@ def skillreqmat():
                     C[i][j-1].append(k)
 skillreqmat()
 # restore() - the 1-D array at (i,j)th position in C contains the list of all persons eligible for jth role in ith project.
-#  If length of this array is 0, this project i cannot be completed as there is no one eligible for jth role. We delete ith row from C
+# If length of this array is 0, this project i cannot be completed as there is no one eligible for jth role. We delete ith row from C
 # before deleting the ith row, we restore back the persons allocated to various roles of ith project, and add them back to their respective places in matrix C
 def restore(list1):
     restoredarray = []
@@ -65,8 +65,8 @@ def restore(list1):
                             C[j][k]=[C[j][k],i]
                             C[j][k].sort()
 # manipulation1() - if the length of the list at C[i][j] is zero, this means that there is no person suitable for that role => project i cannot be completed => clear the ith row from C
-# 59 -73 => if a person is eligible for jth role in ith project as a mentee , he must have a mentor in ith project in the remaining j' roles. If we cannot find a mentor for the jth role from among the j' roles in the ith project , we need to remove that person from the list at C[i][j].
-# 73-76 => suppose we found only one mentor for a person in jth role at (j+1)th role, but that person was himself a mentee for the (j+1)th role for whom we could not find a mentor,so we had to remove that person from the list at C[i][j+1]. Since that person was the mentor for the jth role,we'll have to recheck the ith row until no changes are made. 
+# 85 -103 => if a person is eligible for jth role in ith project as a mentee , he must have a mentor in ith project in the remaining j' roles. If we cannot find a mentor for the jth role from among the j' roles in the ith project , we need to remove that person from the list at C[i][j].
+# 103- 106 => suppose we found only one mentor for a person in jth role at (j+1)th role, but that person was himself a mentee for the (j+1)th role for whom we could not find a mentor,so we had to remove that person from the list at C[i][j+1]. Since that person was the mentor for the jth role,we'll have to recheck the ith row until no changes are made. 
 def manipulation1():
     for i in range(0,len(C)):
         if(len(C[i])==0):
@@ -105,8 +105,8 @@ def manipulation1():
             i=i-1
 PerReq = []
 E = []
-# 82-92 => define a 2-Dimensional matrix PerReq with (i,j)th element as the number of projects in which the ith person is eligible for jth role
-# 93 - 101 => define a 2-Dimensional matrix E with (i,j)th element as the number of persons which are eligible for the jth role in ith project. If ith project cannot be completed, then ith row is an empty list
+# 111-122 => define a 2-Dimensional matrix PerReq with (i,j)th element as the number of projects in which the ith person is eligible for jth role
+# 123 - 131 => define a 2-Dimensional matrix E with (i,j)th element as the number of persons which are eligible for the jth role in ith project. If ith project cannot be completed, then ith row is an empty list
 def calculations():
     for i in range(0,N):
         PerReq.append([])
@@ -129,8 +129,14 @@ def calculations():
                 E[i].append(len(C[i][j]))
             else:
                 E[i].append(-5)
+# sortSeconds() - used in sorting a 2-D list according to the value of 2nd index
 def sortSeconds(val):
     return val[2]
+# calculations2() => 
+# 139 - 143 - define a list freq_PerReq with ith element as the number of vacancies for which the ith person is eligible
+# 144 - 158 - finding the minimum element in E (role for which least number of persons are eligible) and adding the locations of C which have minimum number of elements to minEreqarray
+# 159 - 165 - adding the number of roles filled in minEreqarray[i][0]th project to minEreq[i][2] and sorting the minEreqarray as per the [i][2] values
+# 168 -172 - comparing the persons in C[minEreqarray[0][0]][minEreqarray[0][1] according to the number of roles they are eligible for and returning the person with least number of roles available
 def calculations2():
     freq_PerReq = []
     for i in range(0,N):
@@ -164,6 +170,7 @@ def calculations2():
             evaluate = C[minEreqarray[0][0]][minEreqarray[0][1]][i]
             evalcriteria = freq_PerReq[C[minEreqarray[0][0]][minEreqarray[0][1]][i]]
     return [minEreqarray[0][0],minEreqarray[0][1],evaluate]
+# defmanipulations2() => adds the person given by calculations2() to respective site in C and erases its value from other locations of C
 def manipulations2():
     m2 = calculations2()
     C[m2[0]][m2[1]] = m2[2]
